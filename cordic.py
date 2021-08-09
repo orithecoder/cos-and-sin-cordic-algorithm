@@ -1,13 +1,21 @@
 from math import *
 
+def arctan_taylor(k):
+	r = k
+	sym = -1
+	for n in range(3,1000,2):
+		r += sym*(k**n)/n
+		sym *= -1
+	return degrees(r)
+		
 def angle(n):
-	return degrees(atan(1/2**n)),1/2**n
+	return arctan_taylor(1/2**n),1/2**n
 	
 def c(n):
 	return 1.0/(sqrt(1+2**(-2*n)))
 
 cf = 1
-for i in range(39):
+for i in range(40):
 	cf *= c(i)
 
 req_angle = 50
@@ -26,5 +34,5 @@ for k in range(40):
 		new_y0 = y0 - x0*arc_angle
 	y0 = new_y0
 	x0 = new_x0
-print(cf*x0,cos(radians(req_angle)))
-print(cf*y0,sin(radians(req_angle)))
+print(f"my_cos={cf*x0},cos={cos(radians(req_angle))}")
+print(f"my_sin={cf*y0},sin={sin(radians(req_angle))}")
